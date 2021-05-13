@@ -1,9 +1,9 @@
 package com.faizzfanani.movieappjetpackpro.data.remote.service
 
-import com.faizzfanani.movieappjetpackpro.data.remote.response.Movie
-import com.faizzfanani.movieappjetpackpro.data.remote.response.MovieList
-import com.faizzfanani.movieappjetpackpro.data.remote.response.TvShow
-import com.faizzfanani.movieappjetpackpro.data.remote.response.TvShowList
+import com.faizzfanani.movieappjetpackpro.data.remote.response.MovieResponse
+import com.faizzfanani.movieappjetpackpro.data.remote.response.MovieListResponse
+import com.faizzfanani.movieappjetpackpro.data.remote.response.TvShowResponse
+import com.faizzfanani.movieappjetpackpro.data.remote.response.TvShowListResponse
 import com.faizzfanani.movieappjetpackpro.utils.Constant
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -26,16 +26,16 @@ class NetworkServiceImpl {
         val retrofit = createAdapter()
         service = retrofit.create(NetworkService::class.java)
     }
-    fun getMovieList() : Call<MovieList> {
+    fun getMovieList() : Call<MovieListResponse> {
         return service.getMovieList(Constant.baseUrl, Constant.apiKey, "en-US", 1)
     }
-    fun getMovieDetail(id : Int) : Call<Movie> {
+    fun getMovieDetail(id : Int) : Call<MovieResponse> {
         return service.getMovieDetail(id, Constant.baseUrl, Constant.apiKey, "en-US")
     }
-    fun getTvShowList() : Call<TvShowList> {
+    fun getTvShowList() : Call<TvShowListResponse> {
         return service.getTvShowList(Constant.baseUrl, Constant.apiKey, "en-US", 1)
     }
-    fun getTvDetail(id : Int) : Call<TvShow> {
+    fun getTvDetail(id : Int) : Call<TvShowResponse> {
         return service.getTvDetail(id, Constant.baseUrl, Constant.apiKey, "en-US")
     }
 }

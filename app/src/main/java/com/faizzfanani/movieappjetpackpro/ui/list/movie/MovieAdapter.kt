@@ -2,19 +2,16 @@ package com.faizzfanani.movieappjetpackpro.ui.list.movie
 
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.faizzfanani.movieappjetpackpro.R
-import com.faizzfanani.movieappjetpackpro.data.remote.response.Movie
+import com.faizzfanani.movieappjetpackpro.data.local.entity.MovieEntity
 import com.faizzfanani.movieappjetpackpro.databinding.ItemMovieBinding
 import com.faizzfanani.movieappjetpackpro.ui.detail.DetailActivity
-import com.faizzfanani.movieappjetpackpro.ui.list.tvshow.TvShowAdapter
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.Holder>(){
-    private val list = arrayListOf<Movie>()
-    fun setList(list: List<Movie>){
+    private val list = arrayListOf<MovieEntity>()
+    fun setList(list: List<MovieEntity>){
         this.list.clear()
         this.list.addAll(list)
         notifyDataSetChanged()

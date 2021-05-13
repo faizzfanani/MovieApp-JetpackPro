@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.faizzfanani.movieappjetpackpro.data.remote.response.TvShow
+import com.faizzfanani.movieappjetpackpro.data.local.entity.TvShowEntity
 import com.faizzfanani.movieappjetpackpro.databinding.ItemMovieBinding
 import com.faizzfanani.movieappjetpackpro.ui.detail.DetailActivity
 
 class TvShowAdapter : RecyclerView.Adapter<TvShowAdapter.Holder>(){
-    private val list = arrayListOf<TvShow>()
-    fun setList(list: List<TvShow>){
+    private val list = arrayListOf<TvShowEntity>()
+    fun setList(list: List<TvShowEntity>){
         this.list.clear()
         this.list.addAll(list)
         notifyDataSetChanged()

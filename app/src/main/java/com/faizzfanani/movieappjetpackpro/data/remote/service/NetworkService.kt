@@ -1,9 +1,9 @@
 package com.faizzfanani.movieappjetpackpro.data.remote.service
 
-import com.faizzfanani.movieappjetpackpro.data.remote.response.Movie
-import com.faizzfanani.movieappjetpackpro.data.remote.response.MovieList
-import com.faizzfanani.movieappjetpackpro.data.remote.response.TvShow
-import com.faizzfanani.movieappjetpackpro.data.remote.response.TvShowList
+import com.faizzfanani.movieappjetpackpro.data.remote.response.MovieResponse
+import com.faizzfanani.movieappjetpackpro.data.remote.response.MovieListResponse
+import com.faizzfanani.movieappjetpackpro.data.remote.response.TvShowResponse
+import com.faizzfanani.movieappjetpackpro.data.remote.response.TvShowListResponse
 import com.faizzfanani.movieappjetpackpro.utils.Constant
 import retrofit2.Call
 import retrofit2.http.Field
@@ -16,20 +16,20 @@ interface NetworkService {
     fun getMovieList(@Url baseUrl : String,
                      @Field(Constant.API_KEY) apiKey : String,
                      @Field(Constant.LANGUAGE) language : String,
-                     @Field(Constant.PAGE) page : Int) : Call<MovieList>
+                     @Field(Constant.PAGE) page : Int) : Call<MovieListResponse>
     @GET("/movie/{movie_id}")
     fun getMovieDetail(@Path("movie_id")id:Int,
                        @Url baseUrl : String,
                        @Field(Constant.API_KEY) apiKey : String,
-                       @Field(Constant.LANGUAGE) language : String) : Call<Movie>
+                       @Field(Constant.LANGUAGE) language : String) : Call<MovieResponse>
     @GET("/discover/tv")
     fun getTvShowList(@Url baseUrl : String,
                       @Field(Constant.API_KEY) apiKey : String,
                       @Field(Constant.LANGUAGE) language : String,
-                      @Field(Constant.PAGE) page : Int) : Call<TvShowList>
+                      @Field(Constant.PAGE) page : Int) : Call<TvShowListResponse>
     @GET("/tv/{tv_id}")
     fun getTvDetail(@Path("tv_id")id:Int,
                     @Url baseUrl : String,
                     @Field(Constant.API_KEY) apiKey : String,
-                    @Field(Constant.LANGUAGE) language : String) : Call<TvShow>
+                    @Field(Constant.LANGUAGE) language : String) : Call<TvShowResponse>
 }

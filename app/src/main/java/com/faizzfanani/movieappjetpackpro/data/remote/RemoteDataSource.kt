@@ -1,5 +1,7 @@
 package com.faizzfanani.movieappjetpackpro.data.remote
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.faizzfanani.movieappjetpackpro.data.remote.response.*
 import com.faizzfanani.movieappjetpackpro.data.remote.service.NetworkServiceImpl
 import retrofit2.Call
@@ -16,81 +18,85 @@ class RemoteDataSource private constructor(private val networkServiceImpl: Netwo
             return INSTANCE!!
         }
     }
-    fun getMovieList() : ApiResponse<List<Movie>> {
-        var result = ApiResponse<List<Movie>>()
-        networkServiceImpl.getMovieList().enqueue(object : Callback<MovieList> {
+    fun getMovieList(): LiveData<ApiResponse<List<MovieResponse>>> {
+        val result = MutableLiveData<ApiResponse<List<MovieResponse>>>()
+        networkServiceImpl.getMovieList().enqueue(object : Callback<MovieListResponse>{
             override fun onResponse(
-                call: Call<MovieList>,
-                response: Response<MovieList>
+                    call: Call<MovieListResponse>,
+                    response: Response<MovieListResponse>
             ) {
-                result = if (response.body()?.movieList.isNullOrEmpty()){
-                    ApiResponse.Empty
+                if (response.body()?.movieResponseList.isNullOrEmpty()){
+                    result.value = ApiResponse.Empty
                 }else {
-                    ApiResponse.Success(response.body()!!.movieList)
+                    result.value = ApiResponse.Success(response.body()!!.movieResponseList)
                 }
             }
-            override fun onFailure(call: Call<MovieList>, t: Throwable) {
-                result = ApiResponse.Error("Something went wrong with your connection")
+
+            override fun onFailure(call: Call<MovieListResponse>, t: Throwable) {
+                result.value = ApiResponse.Error("Something went wrong with your connection")
             }
 
         })
         return result
     }
-    fun getMovieDetail(id:Int) : ApiResponse<Movie>{
-        var result = ApiResponse<Movie>()
-        networkServiceImpl.getMovieDetail(id).enqueue(object : Callback<Movie>{
+    fun getMovieDetail(id:Int): LiveData<ApiResponse<MovieResponse>>{
+        val result = MutableLiveData<ApiResponse<MovieResponse>>()
+        networkServiceImpl.getMovieDetail(id).enqueue(object : Callback<MovieResponse>{
             override fun onResponse(
-                call: Call<Movie>,
-                response: Response<Movie>
+                    call: Call<MovieResponse>,
+                    response: Response<MovieResponse>
             ) {
-                result = if (response.body()?.id == null){
-                    ApiResponse.Empty
+                if (response.body()?.id == null){
+                    result.value = ApiResponse.Empty
                 }else {
-                    ApiResponse.Success(response.body()!!)
+                    result.value = ApiResponse.Success(response.body()!!)
                 }
             }
-            override fun onFailure(call: Call<Movie>, t: Throwable) {
-                result = ApiResponse.Error("Something went wrong with your connection")
+
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                result.value = ApiResponse.Error("Something went wrong with your connection")
             }
 
         })
         return result
     }
-    fun getTvShowList() : ApiResponse<List<TvShow>> {
-        var result = ApiResponse<List<TvShow>>()
-        networkServiceImpl.getTvShowList().enqueue(object : Callback<TvShowList> {
+    fun getTvShowList(): LiveData<ApiResponse<List<TvShowResponse>>> {
+        val result = MutableLiveData<ApiResponse<List<TvShowResponse>>>()
+        networkServiceImpl.getTvShowList().enqueue(object : Callback<TvShowListResponse>{
             override fun onResponse(
-                call: Call<TvShowList>,
-                response: Response<TvShowList>
+                    call: Call<TvShowListResponse>,
+                    response: Response<TvShowListResponse>
             ) {
-                result = if (response.body()?.tvShowList.isNullOrEmpty()){
-                    ApiResponse.Empty
+                if (response.body()?.tvShowResponseList.isNullOrEmpty()){
+                    result.value = ApiResponse.Empty
                 }else {
-                    ApiResponse.Success(response.body()!!.tvShowList)
+                    result.value = ApiResponse.Success(response.body()!!.tvShowResponseList)
                 }
             }
-            override fun onFailure(call: Call<TvShowList>, t: Throwable) {
-                result = ApiResponse.Error("Something went wrong with your connection")
+
+            override fun onFailure(call: Call<TvShowListResponse>, t: Throwable) {
+                result.value = ApiResponse.Error("Something went wrong with your connection")
             }
 
         })
         return result
     }
-    fun getTvDetail(id:Int) : ApiResponse<TvShow>{
-        var result = ApiResponse<TvShow>()
-        networkServiceImpl.getTvDetail(id).enqueue(object : Callback<TvShow>{
+    fun getTvDetail(id:Int): LiveData<ApiResponse<TvShowResponse>>{
+        val result = MutableLiveData<ApiResponse<TvShowResponse>>()
+        networkServiceImpl.getTvDetail(id).enqueue(object : Callback<TvShowResponse>{
             override fun onResponse(
-                call: Call<TvShow>,
-                response: Response<TvShow>
+                    call: Call<TvShowResponse>,
+                    response: Response<TvShowResponse>
             ) {
-                result = if (response.body()?.id == null){
-                    ApiResponse.Empty
+                if (response.body()?.id == null){
+                    result.value = ApiResponse.Empty
                 }else {
-                    ApiResponse.Success(response.body()!!)
+                    result.value = ApiResponse.Success(response.body()!!)
                 }
             }
-            override fun onFailure(call: Call<TvShow>, t: Throwable) {
-                result = ApiResponse.Error("Something went wrong with your connection")
+
+            override fun onFailure(call: Call<TvShowResponse>, t: Throwable) {
+                result.value = ApiResponse.Error("Something went wrong with your connection")
             }
 
         })

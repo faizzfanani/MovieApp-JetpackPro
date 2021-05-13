@@ -1,12 +1,9 @@
 package com.faizzfanani.movieappjetpackpro.ui.list
 
 import androidx.lifecycle.ViewModel
-import com.faizzfanani.movieappjetpackpro.data.remote.RemoteDataSource
-import com.faizzfanani.movieappjetpackpro.data.remote.response.ApiResponse
-import com.faizzfanani.movieappjetpackpro.data.remote.response.Movie
-import com.faizzfanani.movieappjetpackpro.data.remote.response.TvShow
+import com.faizzfanani.movieappjetpackpro.data.Repository
 
-class ListViewModel(private val remoteDataSource: RemoteDataSource) : ViewModel() {
-    fun getMovieList() : ApiResponse<List<Movie>> = remoteDataSource.getMovieList()
-    fun getTvShowList() : ApiResponse<List<TvShow>> = remoteDataSource.getTvShowList()
+class ListViewModel(private val repository: Repository) : ViewModel() {
+    fun getMovieList() = repository.getMovieList()
+    fun getTvShowList() = repository.getTvShowList()
 }
