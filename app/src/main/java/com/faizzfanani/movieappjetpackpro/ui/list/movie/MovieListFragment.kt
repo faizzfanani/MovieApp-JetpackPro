@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.faizzfanani.movieappjetpackpro.databinding.FragmentMovieListBinding
 import com.faizzfanani.movieappjetpackpro.ui.list.ListViewModel
 import com.faizzfanani.movieappjetpackpro.ui.viewmodel.ViewModelFactory
@@ -26,6 +27,7 @@ class MovieListFragment : Fragment() {
     }
     private fun loadData(){
         val adapter = MovieAdapter()
+        binding.rvMovie.layoutManager = LinearLayoutManager(context)
         binding.rvMovie.adapter = adapter
         viewModel.getMovieList().observe(this){ resource ->
             when(resource){

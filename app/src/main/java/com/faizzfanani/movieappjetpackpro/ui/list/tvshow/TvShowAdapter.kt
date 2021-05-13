@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.faizzfanani.movieappjetpackpro.data.local.entity.TvShowEntity
 import com.faizzfanani.movieappjetpackpro.databinding.ItemMovieBinding
 import com.faizzfanani.movieappjetpackpro.ui.detail.DetailActivity
+import com.faizzfanani.movieappjetpackpro.utils.Constant
 
 class TvShowAdapter : RecyclerView.Adapter<TvShowAdapter.Holder>(){
     private val list = arrayListOf<TvShowEntity>()
@@ -23,7 +24,7 @@ class TvShowAdapter : RecyclerView.Adapter<TvShowAdapter.Holder>(){
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        Glide.with(holder.itemView.context).load(list[position].posterPath).override(500,500).into(holder.binding.itemPoster)
+        Glide.with(holder.itemView.context).load(Constant.imageUrl+list[position].posterPath).override(500,500).into(holder.binding.itemPoster)
         holder.binding.itemTitle.text = list[position].name
         holder.binding.itemOverview.text = list[position].overview
         holder.binding.itemReleaseDate.text = list[position].firstAiringDate

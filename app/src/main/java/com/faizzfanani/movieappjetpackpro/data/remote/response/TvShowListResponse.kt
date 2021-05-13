@@ -1,5 +1,5 @@
 package com.faizzfanani.movieappjetpackpro.data.remote.response
 
-data class TvShowListResponse (
-    val tvShowResponseList : List<TvShowResponse>
-)
+import com.google.gson.annotations.SerializedName
+
+data class TvShowListResponse (@SerializedName("results") val tvShowResponseList : List<TvShowResponse>)

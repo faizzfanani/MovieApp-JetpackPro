@@ -10,6 +10,7 @@ import com.faizzfanani.movieappjetpackpro.data.local.entity.MovieEntity
 import com.faizzfanani.movieappjetpackpro.data.local.entity.TvShowEntity
 import com.faizzfanani.movieappjetpackpro.databinding.ActivityDetailBinding
 import com.faizzfanani.movieappjetpackpro.ui.viewmodel.ViewModelFactory
+import com.faizzfanani.movieappjetpackpro.utils.Constant
 import com.faizzfanani.movieappjetpackpro.vo.Resource
 
 class DetailActivity : AppCompatActivity() {
@@ -82,19 +83,21 @@ class DetailActivity : AppCompatActivity() {
     }
     private fun setView(data: Any){
         if (data is MovieEntity){
+            supportActionBar?.title = data.title
             binding.detailTitle.text = data.title
             binding.detailOverview.text = data.overview
             binding.detailRating.text = data.voteAverage.toString()
             binding.detailReleaseDate.text = data.releaseDate
-            Glide.with(applicationContext).load(data.posterPath).override(500,500).into(binding.detailPoster)
-            Glide.with(applicationContext).load(data.backdropPath).override(500,500).into(binding.detailBackdrop)
+            Glide.with(applicationContext).load(Constant.imageUrl+data.posterPath).override(500,500).into(binding.detailPoster)
+            Glide.with(applicationContext).load(Constant.imageUrl+data.backdropPath).override(500,500).into(binding.detailBackdrop)
         }else if (data is TvShowEntity){
+            supportActionBar?.title = data.name
             binding.detailTitle.text = data.name
             binding.detailOverview.text = data.overview
             binding.detailRating.text = data.voteAverage.toString()
             binding.detailReleaseDate.text = data.firstAiringDate
-            Glide.with(applicationContext).load(data.posterPath).override(500,500).into(binding.detailPoster)
-            Glide.with(applicationContext).load(data.backdropPath).override(500,500).into(binding.detailBackdrop)
+            Glide.with(applicationContext).load(Constant.imageUrl+data.posterPath).override(500,500).into(binding.detailPoster)
+            Glide.with(applicationContext).load(Constant.imageUrl+data.backdropPath).override(500,500).into(binding.detailBackdrop)
         }
     }
 }

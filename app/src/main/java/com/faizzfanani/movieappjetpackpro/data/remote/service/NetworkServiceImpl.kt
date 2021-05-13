@@ -27,15 +27,15 @@ class NetworkServiceImpl {
         service = retrofit.create(NetworkService::class.java)
     }
     fun getMovieList() : Call<MovieListResponse> {
-        return service.getMovieList(Constant.baseUrl, Constant.apiKey, "en-US", 1)
+        return service.getMovieList(Constant.apiKey, "en-US", 1)
     }
     fun getMovieDetail(id : Int) : Call<MovieResponse> {
-        return service.getMovieDetail(id, Constant.baseUrl, Constant.apiKey, "en-US")
+        return service.getMovieDetail(id, Constant.apiKey, "en-US")
     }
     fun getTvShowList() : Call<TvShowListResponse> {
-        return service.getTvShowList(Constant.baseUrl, Constant.apiKey, "en-US", 1)
+        return service.getTvShowList(Constant.apiKey, "en-US", 1)
     }
     fun getTvDetail(id : Int) : Call<TvShowResponse> {
-        return service.getTvDetail(id, Constant.baseUrl, Constant.apiKey, "en-US")
+        return service.getTvDetail(id, Constant.apiKey, "en-US")
     }
 }
