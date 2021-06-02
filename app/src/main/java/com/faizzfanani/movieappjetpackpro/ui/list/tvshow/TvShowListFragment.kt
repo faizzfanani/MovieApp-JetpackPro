@@ -33,7 +33,7 @@ class TvShowListFragment : Fragment() {
         val adapter = TvShowAdapter()
         binding.rvTvShow.layoutManager = LinearLayoutManager(context)
         binding.rvTvShow.adapter = adapter
-        viewModel.getTvShowList().observe(this) { resource ->
+        viewModel.getTvShowList().observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is Resource.Success -> {
                     resource.data?.let {

@@ -29,7 +29,7 @@ class MovieListFragment : Fragment() {
         val adapter = MovieAdapter()
         binding.rvMovie.layoutManager = LinearLayoutManager(context)
         binding.rvMovie.adapter = adapter
-        viewModel.getMovieList().observe(this){ resource ->
+        viewModel.getMovieList().observe(viewLifecycleOwner){ resource ->
             when(resource){
                 is Resource.Success -> {
                     resource.data?.let {
