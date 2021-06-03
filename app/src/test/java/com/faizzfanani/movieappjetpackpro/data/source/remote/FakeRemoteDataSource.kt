@@ -29,10 +29,8 @@ class FakeRemoteDataSource(
                 val filterData = movieResponse.takeIf { it!!.id == id }
                 if(filterData != null){
                     movieResponse?.let { emit(ApiResponse.Success(it)) }
-                }
-            }else {
-                movieResponse?.let{ emit(ApiResponse.Error("Data empty"))}
-            }
+                }else{emit(ApiResponse.Error("Data empty"))}
+            }else{emit(ApiResponse.Error("Data empty"))}
         }
     }
 
@@ -52,10 +50,8 @@ class FakeRemoteDataSource(
                 val filterData = tvShowResponse.takeIf { it!!.id == id }
                 if(filterData != null){
                     tvShowResponse?.let { emit(ApiResponse.Success(it)) }
-                }
-            }else{
-                tvShowResponse?.let{emit(ApiResponse.Error("Data empty"))}
-            }
+                }else{emit(ApiResponse.Error("Data empty"))}
+            }else{emit(ApiResponse.Error("Data empty"))}
         }
     }
 }

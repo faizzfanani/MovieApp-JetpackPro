@@ -50,20 +50,7 @@ class DetailViewModelTest{
         assertNotNull(result?.data)
         assertEquals(fakeMovieDetail, result?.data)
     }
-    @Test
-    fun `get detail movie empty`(){
-        //given
-        remoteDataSource.movieResponse = null
-        //when
-        var result : Resource<MovieEntity>? = null
-        viewModel.getMovieDetail(666).observeForever {
-            it.message?.let { errorMessage ->
-                result = Resource.Error(errorMessage, fakeMovieDetail) }
-        }
-        //then
-        assertEquals(Resource.Error("Data empty", fakeMovieDetail).message, result?.message)
-        assertEquals(Resource.Error("Data empty", fakeMovieDetail).data, result?.data)
-    }
+
     @Test
     fun `get detail tvShow normal`(){
         //given
@@ -77,18 +64,5 @@ class DetailViewModelTest{
         assertNotNull(result?.data)
         assertEquals(fakeTvShowDetail, result?.data)
     }
-    @Test
-    fun `get detail tvShow empty`(){
-        //given
-        remoteDataSource.tvShowResponse = null
-        //when
-        var result : Resource<TvShowEntity>? = null
-        viewModel.getTvShowDetail(666).observeForever {
-            it.message?.let { errorMessage ->
-                result = Resource.Error(errorMessage, fakeTvShowDetail) }
-        }
-        //then
-        assertEquals(Resource.Error("Data empty", fakeTvShowDetail).message, result?.message)
-        assertEquals(Resource.Error("Data empty", fakeTvShowDetail).data, result?.data)
-    }
+
 }

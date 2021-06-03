@@ -58,7 +58,7 @@ class FakeRepository(
             }
 
             override fun saveCallResult(data: MovieResponse) {
-                movieEntity?.let { localDataSource.addMovie(it) }
+                localDataSource.addMovie(movieEntity!!)
             }
 
         }.asLiveData()
@@ -100,7 +100,7 @@ class FakeRepository(
             }
 
             override fun saveCallResult(data: TvShowResponse) {
-                tvShowEntity?.let { localDataSource.addTvShow(it) }
+                localDataSource.addTvShow(tvShowEntity!!)
             }
 
         }.asLiveData()

@@ -36,8 +36,8 @@ class FakeLocalDataSource(
                 val filterData = movieEntity.takeIf { it!!.id == id }
                 if(filterData != null){
                     movieEntity?.let { emit(it) }
-                }
-            }
+                }else{ movieEntity?.let { emit(it) }}
+            }else{ movieEntity?.let { emit(it) }}
         }
     }
 
@@ -65,8 +65,8 @@ class FakeLocalDataSource(
                 val filterData = tvShowEntity.takeIf { it!!.id == id }
                 if(filterData != null){
                     tvShowEntity?.let { emit(it) }
-                }
-            }
+                }else{ tvShowEntity?.let { emit(it) }}
+            }else{ tvShowEntity?.let { emit(it) }}
         }
     }
 
