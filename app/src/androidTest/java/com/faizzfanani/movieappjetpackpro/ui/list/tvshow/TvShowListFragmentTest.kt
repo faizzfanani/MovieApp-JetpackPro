@@ -3,6 +3,7 @@ package com.faizzfanani.movieappjetpackpro.ui.list.tvshow
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.PerformException
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
@@ -13,14 +14,27 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.faizzfanani.movieappjetpackpro.R
 import com.faizzfanani.movieappjetpackpro.ui.home.HomeActivity
+import com.faizzfanani.movieappjetpackpro.utils.EspressoIdlingResource
 import com.google.android.material.tabs.TabLayout
 import org.hamcrest.Matchers.allOf
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 class TvShowListFragmentTest{
     @get:Rule
     var activityRule = ActivityScenarioRule(HomeActivity::class.java)
+
+    @Before
+    fun setUp(){
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
+    }
+
+    @After
+    fun tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.idlingResource)
+    }
 
     @Test
     fun loadTvShowList() {

@@ -66,6 +66,7 @@ dependencies {
     kapt "androidx.room:room-compiler:$roomVersion"
 
     //testing
+    implementation "androidx.test.espresso:espresso-idling-resource:$idlingResourceVersion"
     testImplementation "junit:junit:$junitVersion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
     testImplementation "org.mockito:mockito-inline:$mockitoInlineVersion"

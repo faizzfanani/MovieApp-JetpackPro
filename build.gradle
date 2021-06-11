@@ -31,6 +31,7 @@ ext {
     legacyVersion = '1.0.0'
     coreVersion = '1.5.0'
     constraintLayoutVersion = '2.0.4'
+    idlingResourceVersion = '3.3.0'
     junitVersion = '4.13.2'
     junitExtversion = '1.1.2'
     archCoreVersion = '2.1.0'
