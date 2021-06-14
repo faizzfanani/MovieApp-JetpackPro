@@ -1,6 +1,8 @@
 package com.faizzfanani.movieappjetpackpro.data
 
 import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.faizzfanani.movieappjetpackpro.data.local.LocalDataSource
 import com.faizzfanani.movieappjetpackpro.data.local.entity.MovieEntity
 import com.faizzfanani.movieappjetpackpro.data.local.entity.TvShowEntity
@@ -25,14 +27,19 @@ class RepositoryImpl(
         }
     }
     //Movies
-    override fun getMovieList(): LiveData<Resource<List<MovieEntity>>> {
-        return object : NetworkBoundResource<List<MovieEntity>, List<MovieResponse>>(appExecutor) {
+    override fun getMovieList(): LiveData<Resource<PagedList<MovieEntity>>> {
+        return object : NetworkBoundResource<PagedList<MovieEntity>, List<MovieResponse>>(appExecutor) {
             @Suppress("UNCHECKED_CAST")
-            override fun loadFromDB(): LiveData<List<MovieEntity>> {
-                return localDataSource.getMovieList()
+            override fun loadFromDB(): LiveData<PagedList<MovieEntity>> {
+                val config = PagedList.Config.Builder()
+                        .setEnablePlaceholders(false)
+                        .setInitialLoadSizeHint(5)
+                        .setPageSize(5)
+                        .build()
+                return LivePagedListBuilder(localDataSource.getMovieList(), config).build()
             }
 
-            override fun shouldFetch(data: List<MovieEntity>?): Boolean {
+            override fun shouldFetch(data: PagedList<MovieEntity>?): Boolean {
                 return true
             }
 
@@ -73,14 +80,19 @@ class RepositoryImpl(
         }.asLiveData()
     }
     //Tv Show
-    override fun getTvShowList(): LiveData<Resource<List<TvShowEntity>>> {
-        return object : NetworkBoundResource<List<TvShowEntity>, List<TvShowResponse>>(appExecutor) {
+    override fun getTvShowList(): LiveData<Resource<PagedList<TvShowEntity>>> {
+        return object : NetworkBoundResource<PagedList<TvShowEntity>, List<TvShowResponse>>(appExecutor) {
             @Suppress("UNCHECKED_CAST")
-            override fun loadFromDB(): LiveData<List<TvShowEntity>> {
-                return localDataSource.getTvShowList()
+            override fun loadFromDB(): LiveData<PagedList<TvShowEntity>> {
+                val config = PagedList.Config.Builder()
+                        .setEnablePlaceholders(false)
+                        .setInitialLoadSizeHint(5)
+                        .setPageSize(5)
+                        .build()
+                return LivePagedListBuilder(localDataSource.getTvShowList(), config).build()
             }
 
-            override fun shouldFetch(data: List<TvShowEntity>?): Boolean {
+            override fun shouldFetch(data: PagedList<TvShowEntity>?): Boolean {
                 return true
             }
 

@@ -1,6 +1,7 @@
 package com.faizzfanani.movieappjetpackpro.data.local
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import com.faizzfanani.movieappjetpackpro.data.local.dao.MovieDao
 import com.faizzfanani.movieappjetpackpro.data.local.dao.TvShowDao
 import com.faizzfanani.movieappjetpackpro.data.local.entity.MovieEntity
@@ -21,13 +22,17 @@ open class LocalDataSourceImpl(private val movieDao: MovieDao, private val tvSho
         movieDao.addMovie(movieEntity)
     }
     override fun addMovies(movies: List<MovieEntity>){
-        movieDao.addMovies(movies)
+        movieDao.upsert(movies)
     }
-    override fun getMovieList(): LiveData<List<MovieEntity>> {
+    override fun getMovieList(): DataSource.Factory<Int, MovieEntity> {
         return movieDao.getMovieList()
     }
     override fun getMovieDetails(id:Int):LiveData<MovieEntity>{
         return movieDao.getMovieDetails(id)
+    }
+
+    override fun updateMovieFavorite(id: Int, isFavorite: Boolean) {
+        movieDao.updateFavorite(id, isFavorite)
     }
 
     //TvShows
@@ -35,12 +40,15 @@ open class LocalDataSourceImpl(private val movieDao: MovieDao, private val tvSho
         tvShowDao.addTvShow(tvShowEntity)
     }
     override fun addTvShows(tvShows: List<TvShowEntity>){
-        tvShowDao.addTvShows(tvShows)
+        tvShowDao.upsert(tvShows)
     }
-    override fun getTvShowList(): LiveData<List<TvShowEntity>> {
+    override fun getTvShowList(): DataSource.Factory<Int, TvShowEntity> {
         return tvShowDao.getTvShowList()
     }
     override fun getTvShowDetails(id:Int):LiveData<TvShowEntity>{
         return tvShowDao.getTvDetails(id)
+    }
+    override fun updateTvShowFavorite(id: Int, isFavorite: Boolean) {
+        tvShowDao.updateFavorite(id, isFavorite)
     }
 }

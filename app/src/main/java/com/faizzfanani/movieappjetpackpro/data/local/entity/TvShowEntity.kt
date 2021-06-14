@@ -12,4 +12,5 @@ data class TvShowEntity (
     val posterPath : String,
     val backdropPath : String,
     val firstAiringDate : String,
-    val voteAverage : Double)
+    val voteAverage : Double,
+    var isFavorite : Boolean = false)
