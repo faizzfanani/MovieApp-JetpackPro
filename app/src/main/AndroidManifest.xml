@@ -11,7 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieAppJetpackPro">
-        <activity android:name=".ui.splashscreen.SplashScreenActivity"
+        <activity
+            android:name=".ui.favorite.FavoriteActivity"
+            android:parentActivityName=".ui.home.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.home.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".ui.splashscreen.SplashScreenActivity"
             android:theme="@style/Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +34,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.home.HomeActivity" />
         </activity>
-        <activity android:name=".ui.home.HomeActivity"/>
+        <activity android:name=".ui.home.HomeActivity" />
     </application>
 
 </manifest>

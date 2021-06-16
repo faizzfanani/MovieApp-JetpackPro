@@ -6,7 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.faizzfanani.movieappjetpackpro.data.Repository
 import com.faizzfanani.movieappjetpackpro.di.Injection
 import com.faizzfanani.movieappjetpackpro.ui.detail.DetailViewModel
-import com.faizzfanani.movieappjetpackpro.ui.list.ListViewModel
+import com.faizzfanani.movieappjetpackpro.ui.favorite.list.FavoriteViewModel
+import com.faizzfanani.movieappjetpackpro.ui.home.list.ListViewModel
 
 class ViewModelFactory private constructor(private val repository: Repository) : ViewModelProvider.NewInstanceFactory() {
 
@@ -16,6 +17,8 @@ class ViewModelFactory private constructor(private val repository: Repository) :
             return ListViewModel(repository) as T
         }else if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
             return DetailViewModel(repository) as T
+        }else if (modelClass.isAssignableFrom(FavoriteViewModel::class.java)) {
+            return FavoriteViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

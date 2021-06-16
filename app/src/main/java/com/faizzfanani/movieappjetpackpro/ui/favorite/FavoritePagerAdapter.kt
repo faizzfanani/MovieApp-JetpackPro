@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.faizzfanani.movieappjetpackpro.ui.home
+package com.faizzfanani.movieappjetpackpro.ui.favorite
 
 import android.content.Context
 import androidx.annotation.StringRes
@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.faizzfanani.movieappjetpackpro.R
-import com.faizzfanani.movieappjetpackpro.ui.home.list.movie.MovieListFragment
-import com.faizzfanani.movieappjetpackpro.ui.home.list.tvshow.TvShowListFragment
+import com.faizzfanani.movieappjetpackpro.ui.favorite.list.MovieFavoriteFragment
+import com.faizzfanani.movieappjetpackpro.ui.favorite.list.TvShowFavoriteFragment
 
-class SectionPagerAdapter(private val mContext: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class FavoritePagerAdapter(private val mContext: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     companion object {
         @StringRes
@@ -20,8 +20,8 @@ class SectionPagerAdapter(private val mContext: Context, fm: FragmentManager) : 
 
     override fun getItem(position: Int): Fragment =
             when (position) {
-                0 -> MovieListFragment()
-                1 -> TvShowListFragment()
+                0 -> MovieFavoriteFragment()
+                1 -> TvShowFavoriteFragment()
                 else -> Fragment()
             }
 

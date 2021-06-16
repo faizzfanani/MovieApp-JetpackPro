@@ -27,6 +27,9 @@ open class LocalDataSourceImpl(private val movieDao: MovieDao, private val tvSho
     override fun getMovieList(): DataSource.Factory<Int, MovieEntity> {
         return movieDao.getMovieList()
     }
+    override fun getMovieFavorite(): DataSource.Factory<Int, MovieEntity> {
+        return movieDao.getMovieFavorite()
+    }
     override fun getMovieDetails(id:Int):LiveData<MovieEntity>{
         return movieDao.getMovieDetails(id)
     }
@@ -44,6 +47,9 @@ open class LocalDataSourceImpl(private val movieDao: MovieDao, private val tvSho
     }
     override fun getTvShowList(): DataSource.Factory<Int, TvShowEntity> {
         return tvShowDao.getTvShowList()
+    }
+    override fun getTvShowFavorite(): DataSource.Factory<Int, TvShowEntity> {
+        return tvShowDao.getTvShowFavorite()
     }
     override fun getTvShowDetails(id:Int):LiveData<TvShowEntity>{
         return tvShowDao.getTvDetails(id)

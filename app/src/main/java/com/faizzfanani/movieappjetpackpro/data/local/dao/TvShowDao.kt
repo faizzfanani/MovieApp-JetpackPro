@@ -16,13 +16,18 @@ interface TvShowDao {
     @Query("SELECT * FROM TvShowEntity")
     fun getTvShowList(): DataSource.Factory<Int, TvShowEntity>
 
+    @Query("SELECT * FROM TvShowEntity WHERE isFavorite = 1")
+    fun getTvShowFavorite(): DataSource.Factory<Int, TvShowEntity>
+
     @Query("SELECT * FROM TvShowEntity WHERE id = :id")
     fun getTvDetails(id: Int): LiveData<TvShowEntity>
 
     @Query("UPDATE TvShowEntity SET isFavorite = :isFavorite WHERE id = :id")
     fun updateFavorite(id: Int, isFavorite: Boolean)
+
     @Query("SELECT isFavorite FROM TvShowEntity WHERE id = :id")
     fun isFavorite(id: Int): Boolean
+
     @Update
     fun update(tvShowEntity: TvShowEntity)
 

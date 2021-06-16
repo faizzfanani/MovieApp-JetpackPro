@@ -1,4 +1,4 @@
-package com.faizzfanani.movieappjetpackpro.ui.list.movie
+package com.faizzfanani.movieappjetpackpro.ui.home.list.tvshow
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,29 +8,33 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.faizzfanani.movieappjetpackpro.databinding.FragmentMovieListBinding
-import com.faizzfanani.movieappjetpackpro.ui.list.ListViewModel
+import com.faizzfanani.movieappjetpackpro.databinding.FragmentTvShowListBinding
+import com.faizzfanani.movieappjetpackpro.ui.home.list.ListViewModel
 import com.faizzfanani.movieappjetpackpro.ui.viewmodel.ViewModelFactory
 import com.faizzfanani.movieappjetpackpro.vo.Resource
 
-class MovieListFragment : Fragment() {
+class TvShowListFragment : Fragment() {
     private lateinit var viewModel: ListViewModel
-    private lateinit var binding: FragmentMovieListBinding
+    private lateinit var binding: FragmentTvShowListBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this, ViewModelFactory.getInstance(requireActivity().application))[ListViewModel::class.java]
-        binding = FragmentMovieListBinding.inflate(layoutInflater)
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory.getInstance(requireActivity().application)
+        )[ListViewModel::class.java]
+        binding = FragmentTvShowListBinding.inflate(layoutInflater)
         loadData()
         return binding.root
     }
-    private fun loadData(){
-        val adapter = MovieAdapter()
-        binding.rvMovie.layoutManager = LinearLayoutManager(context)
-        binding.rvMovie.adapter = adapter
-        viewModel.getMovieList().observe(viewLifecycleOwner){ resource ->
-            when(resource){
+
+    private fun loadData() {
+        val adapter = TvShowAdapter()
+        binding.rvTvShow.layoutManager = LinearLayoutManager(context)
+        binding.rvTvShow.adapter = adapter
+        viewModel.getTvShowList().observe(viewLifecycleOwner) { resource ->
+            when (resource) {
                 is Resource.Success -> {
                     resource.data?.let {
                         adapter.setList(it)
@@ -41,7 +45,7 @@ class MovieListFragment : Fragment() {
                     resource.data?.let {
                         adapter.setList(it)
                     }
-                    if (resource.data.isNullOrEmpty()){
+                    if (resource.data.isNullOrEmpty()) {
                         binding.progressBar.visibility = View.VISIBLE
                     }
                 }

@@ -57,6 +57,14 @@ class RepositoryImpl(
         }.asLiveData()
     }
 
+    override fun getMovieFavorite(): LiveData<PagedList<MovieEntity>> {
+        val config = PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setInitialLoadSizeHint(5)
+                .setPageSize(5)
+                .build()
+        return LivePagedListBuilder(localDataSource.getMovieFavorite(), config).build()
+    }
     override fun getMovieDetails(id: Int): LiveData<Resource<MovieEntity>> {
         return object : NetworkBoundResource<MovieEntity, MovieResponse>(appExecutor) {
             override fun loadFromDB(): LiveData<MovieEntity> {
@@ -79,6 +87,11 @@ class RepositoryImpl(
 
         }.asLiveData()
     }
+
+    override fun updateMovieFavorite(id: Int, isFavorite: Boolean) {
+        localDataSource.updateMovieFavorite(id, isFavorite)
+    }
+
     //Tv Show
     override fun getTvShowList(): LiveData<Resource<PagedList<TvShowEntity>>> {
         return object : NetworkBoundResource<PagedList<TvShowEntity>, List<TvShowResponse>>(appExecutor) {
@@ -110,6 +123,15 @@ class RepositoryImpl(
         }.asLiveData()
     }
 
+    override fun getTvShowFavorite(): LiveData<PagedList<TvShowEntity>> {
+        val config = PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setInitialLoadSizeHint(5)
+                .setPageSize(5)
+                .build()
+        return LivePagedListBuilder(localDataSource.getTvShowFavorite(), config).build()
+    }
+
     override fun getTvShowDetails(id: Int): LiveData<Resource<TvShowEntity>> {
         return object : NetworkBoundResource<TvShowEntity, TvShowResponse>(appExecutor) {
             override fun loadFromDB(): LiveData<TvShowEntity> {
@@ -131,5 +153,9 @@ class RepositoryImpl(
             }
 
         }.asLiveData()
+    }
+
+    override fun updateTvShowFavorite(id: Int, isFavorite: Boolean) {
+        localDataSource.updateTvShowFavorite(id, isFavorite)
     }
 }

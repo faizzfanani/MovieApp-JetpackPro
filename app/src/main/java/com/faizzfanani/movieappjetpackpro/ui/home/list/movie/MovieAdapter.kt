@@ -1,4 +1,4 @@
-package com.faizzfanani.movieappjetpackpro.ui.list.movie
+package com.faizzfanani.movieappjetpackpro.ui.home.list.movie
 
 import android.content.Intent
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.faizzfanani.movieappjetpackpro.ui.list
+package com.faizzfanani.movieappjetpackpro.ui.home.list
 
 import androidx.lifecycle.ViewModel
 import com.faizzfanani.movieappjetpackpro.data.Repository

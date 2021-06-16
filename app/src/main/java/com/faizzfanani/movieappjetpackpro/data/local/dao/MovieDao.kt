@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
 import com.faizzfanani.movieappjetpackpro.data.local.entity.MovieEntity
-import com.faizzfanani.movieappjetpackpro.data.local.entity.TvShowEntity
 
 @Dao
 interface MovieDao {
@@ -17,13 +16,18 @@ interface MovieDao {
     @Query("SELECT * FROM MovieEntity")
     fun getMovieList(): DataSource.Factory<Int, MovieEntity>
 
+    @Query("SELECT * FROM MovieEntity WHERE isFavorite = 1")
+    fun getMovieFavorite(): DataSource.Factory<Int, MovieEntity>
+
     @Query("SELECT * FROM MovieEntity WHERE id = :id")
     fun getMovieDetails(id: Int): LiveData<MovieEntity>
 
     @Query("UPDATE MovieEntity SET isFavorite = :isFavorite WHERE id = :id")
     fun updateFavorite(id: Int, isFavorite: Boolean)
+
     @Query("SELECT isFavorite FROM MovieEntity WHERE id = :id")
     fun isFavorite(id: Int): Boolean
+
     @Update
     fun update(movieEntity: MovieEntity)
 
