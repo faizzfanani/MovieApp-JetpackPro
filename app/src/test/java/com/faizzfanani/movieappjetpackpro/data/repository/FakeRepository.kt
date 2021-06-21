@@ -1,6 +1,8 @@
 package com.faizzfanani.movieappjetpackpro.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.faizzfanani.movieappjetpackpro.data.NetworkBoundResource
 import com.faizzfanani.movieappjetpackpro.data.Repository
 import com.faizzfanani.movieappjetpackpro.data.local.LocalDataSource
@@ -22,13 +24,19 @@ class FakeRepository(
         var tvShowList: List<TvShowEntity> = mutableListOf(),
         var tvShowEntity: TvShowEntity? = null
 ) : Repository{
-    override fun getMovieList(): LiveData<Resource<List<MovieEntity>>> {
-        return object : NetworkBoundResource<List<MovieEntity>, List<MovieResponse>>(appExecutor){
-            override fun loadFromDB(): LiveData<List<MovieEntity>> {
-                return localDataSource.getMovieList()
+    //Movie
+    override fun getMovieList(): LiveData<Resource<PagedList<MovieEntity>>> {
+        return object : NetworkBoundResource<PagedList<MovieEntity>, List<MovieResponse>>(appExecutor){
+            override fun loadFromDB(): LiveData<PagedList<MovieEntity>> {
+                val config = PagedList.Config.Builder()
+                        .setEnablePlaceholders(false)
+                        .setInitialLoadSizeHint(5)
+                        .setPageSize(5)
+                        .build()
+                return LivePagedListBuilder(localDataSource.getMovieList(), config).build()
             }
 
-            override fun shouldFetch(data: List<MovieEntity>?): Boolean {
+            override fun shouldFetch(data: PagedList<MovieEntity>?): Boolean {
                 return true
             }
 
@@ -64,13 +72,33 @@ class FakeRepository(
         }.asLiveData()
     }
 
-    override fun getTvShowList(): LiveData<Resource<List<TvShowEntity>>> {
-        return object : NetworkBoundResource<List<TvShowEntity>, List<TvShowResponse>>(appExecutor){
-            override fun loadFromDB(): LiveData<List<TvShowEntity>> {
-                return localDataSource.getTvShowList()
+    override fun getMovieFavorite(): LiveData<PagedList<MovieEntity>> {
+        val config = PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setInitialLoadSizeHint(5)
+                .setPageSize(5)
+                .build()
+        return LivePagedListBuilder(localDataSource.getMovieFavorite(), config).build()
+    }
+    override fun updateMovieFavorite(id: Int, isFavorite: Boolean) {
+        appExecutor.diskIO().execute {
+            localDataSource.updateMovieFavorite(id, isFavorite)
+        }
+    }
+
+    //Tv Show
+    override fun getTvShowList(): LiveData<Resource<PagedList<TvShowEntity>>> {
+        return object : NetworkBoundResource<PagedList<TvShowEntity>, List<TvShowResponse>>(appExecutor){
+            override fun loadFromDB(): LiveData<PagedList<TvShowEntity>> {
+                val config = PagedList.Config.Builder()
+                        .setEnablePlaceholders(false)
+                        .setInitialLoadSizeHint(5)
+                        .setPageSize(5)
+                        .build()
+                return LivePagedListBuilder(localDataSource.getTvShowList(), config).build()
             }
 
-            override fun shouldFetch(data: List<TvShowEntity>?): Boolean {
+            override fun shouldFetch(data: PagedList<TvShowEntity>?): Boolean {
                 return true
             }
 
@@ -104,5 +132,18 @@ class FakeRepository(
             }
 
         }.asLiveData()
+    }
+    override fun getTvShowFavorite(): LiveData<PagedList<TvShowEntity>> {
+        val config = PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setInitialLoadSizeHint(5)
+                .setPageSize(5)
+                .build()
+        return LivePagedListBuilder(localDataSource.getTvShowFavorite(), config).build()
+    }
+    override fun updateTvShowFavorite(id: Int, isFavorite: Boolean) {
+        appExecutor.diskIO().execute {
+            localDataSource.updateTvShowFavorite(id, isFavorite)
+        }
     }
 }

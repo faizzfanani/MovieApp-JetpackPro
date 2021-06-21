@@ -8,10 +8,10 @@ import com.faizzfanani.movieappjetpackpro.data.remote.response.MovieResponse
 import com.faizzfanani.movieappjetpackpro.data.remote.response.TvShowResponse
 
 class FakeRemoteDataSource(
-        var movieList: List<MovieResponse> = mutableListOf(),
-        var movieResponse: MovieResponse? = null,
-        var tvShowList: List<TvShowResponse> = mutableListOf(),
-        var tvShowResponse: TvShowResponse? = null
+    private var movieList: List<MovieResponse> = mutableListOf(),
+    private var movieResponse: MovieResponse? = null,
+    private var tvShowList: List<TvShowResponse> = mutableListOf(),
+    private var tvShowResponse: TvShowResponse? = null
 ) : RemoteDataSource {
     override fun getMovieList(): LiveData<ApiResponse<List<MovieResponse>>> {
         return liveData {

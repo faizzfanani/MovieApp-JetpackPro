@@ -6,6 +6,7 @@ import com.faizzfanani.movieappjetpackpro.data.remote.response.ApiResponse
 import com.faizzfanani.movieappjetpackpro.utils.AppExecutor
 import com.faizzfanani.movieappjetpackpro.vo.Resource
 
+@Suppress("LeakingThis")
 abstract class NetworkBoundResource<ResultType, RequestType>(appExecutor: AppExecutor) {
     private val result: MediatorLiveData<Resource<ResultType>> =
             MediatorLiveData<Resource<ResultType>>()
@@ -69,9 +70,7 @@ abstract class NetworkBoundResource<ResultType, RequestType>(appExecutor: AppExe
         val dbSource = loadFromDB()
 
         result.addSource(dbSource) { data: ResultType ->
-            result.setValue(
-                    Resource.Loading(data)
-            )
+            result.value = Resource.Loading(data)
             result.removeSource(dbSource)
             if (shouldFetch(data)) {
                 fetchFromNetwork(dbSource)

@@ -1,6 +1,7 @@
 package com.faizzfanani.movieappjetpackpro.ui.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.paging.PagedList
 import com.faizzfanani.movieappjetpackpro.data.local.entity.MovieEntity
 import com.faizzfanani.movieappjetpackpro.data.local.entity.TvShowEntity
 import com.faizzfanani.movieappjetpackpro.data.repository.FakeRepository
@@ -40,11 +41,11 @@ class ListViewModelTest {
     }
 
     @Test
-    fun `get list movie normal`(){
+    fun `get list movie`(){
         //given
         localDataSource.addMovies(fakeMovieList)
         //when
-        var result : Resource<List<MovieEntity>>? = null
+        var result : Resource<PagedList<MovieEntity>>? = null
         viewModel.getMovieList().observeForever {
             result = it
         }
@@ -52,26 +53,13 @@ class ListViewModelTest {
         assertNotNull(result?.data)
         assertEquals(fakeMovieList, result?.data)
     }
+
     @Test
-    fun `get list movie empty`(){
-        //given
-        remoteDataSource.movieList = emptyList()
-        //when
-        var result : Resource<List<MovieEntity>>? = null
-        viewModel.getMovieList().observeForever {
-            it.message?.let { errorMessage ->
-                result = Resource.Error(errorMessage, fakeMovieList) }
-        }
-        //then
-        assertEquals(Resource.Error("Data empty", fakeMovieList).message, result?.message)
-        assertEquals(Resource.Error("Data empty", fakeMovieList).data, result?.data)
-    }
-    @Test
-    fun `get list tvShow normal`(){
+    fun `get list tvShow`(){
         //given
         localDataSource.addTvShows(fakeTvShowList)
         //when
-        var result : Resource<List<TvShowEntity>>? = null
+        var result : Resource<PagedList<TvShowEntity>>? = null
         viewModel.getTvShowList().observeForever {
             result = it
         }
@@ -79,18 +67,5 @@ class ListViewModelTest {
         assertNotNull(result?.data)
         assertEquals(fakeTvShowList, result?.data)
     }
-    @Test
-    fun `get list tvShow empty`(){
-        //given
-        remoteDataSource.tvShowList = emptyList()
-        //when
-        var result : Resource<List<TvShowEntity>>? = null
-        viewModel.getTvShowList().observeForever {
-            it.message?.let { errorMessage ->
-                result = Resource.Error(errorMessage, fakeTvShowList) }
-        }
-        //then
-        assertEquals(Resource.Error("Data empty", fakeTvShowList).message, result?.message)
-        assertEquals(Resource.Error("Data empty", fakeTvShowList).data, result?.data)
-    }
+
 }

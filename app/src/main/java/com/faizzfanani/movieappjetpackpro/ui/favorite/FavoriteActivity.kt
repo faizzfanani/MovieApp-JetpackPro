@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.faizzfanani.movieappjetpackpro.R
 import com.faizzfanani.movieappjetpackpro.databinding.ActivityFavoriteBinding
+import com.faizzfanani.movieappjetpackpro.utils.Constant.Companion.titleFavorite
 
 class FavoriteActivity : AppCompatActivity() {
     @Suppress("DEPRECATION")
@@ -13,11 +14,11 @@ class FavoriteActivity : AppCompatActivity() {
         val activityFavoriteBinding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(activityFavoriteBinding.root)
         val favoritePagerAdapter = FavoritePagerAdapter(this, supportFragmentManager)
-        activityFavoriteBinding.viewPager.adapter = favoritePagerAdapter
-        activityFavoriteBinding.tabs.setupWithViewPager(activityFavoriteBinding.viewPager)
+        activityFavoriteBinding.viewPagerFavorite.adapter = favoritePagerAdapter
+        activityFavoriteBinding.tabsFavorite.setupWithViewPager(activityFavoriteBinding.viewPagerFavorite)
         supportActionBar?.elevation = 0f
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.navy)))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Favorites"
+        supportActionBar?.title = titleFavorite
     }
 }

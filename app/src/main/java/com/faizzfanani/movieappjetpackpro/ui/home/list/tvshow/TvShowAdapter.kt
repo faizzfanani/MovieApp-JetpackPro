@@ -11,6 +11,9 @@ import com.faizzfanani.movieappjetpackpro.data.local.entity.TvShowEntity
 import com.faizzfanani.movieappjetpackpro.databinding.ItemMovieBinding
 import com.faizzfanani.movieappjetpackpro.ui.detail.DetailActivity
 import com.faizzfanani.movieappjetpackpro.utils.Constant
+import com.faizzfanani.movieappjetpackpro.utils.Constant.Companion.id
+import com.faizzfanani.movieappjetpackpro.utils.Constant.Companion.tagTvShow
+import com.faizzfanani.movieappjetpackpro.utils.Constant.Companion.type
 
 class TvShowAdapter : PagedListAdapter<TvShowEntity, TvShowAdapter.Holder>(DIFF_CALLBACK){
     private val list = arrayListOf<TvShowEntity>()
@@ -45,8 +48,8 @@ class TvShowAdapter : PagedListAdapter<TvShowEntity, TvShowAdapter.Holder>(DIFF_
         //item click listener
         holder.binding.root.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailActivity::class.java)
-            intent.putExtra("id", list[position].id)
-            intent.putExtra("type", "tvShow")
+            intent.putExtra(id, list[position].id)
+            intent.putExtra(type, tagTvShow)
             holder.itemView.context.startActivity(intent)
         }
     }

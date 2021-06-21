@@ -8,7 +8,7 @@ import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.PerformException
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -22,7 +22,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-
 
 class DetailActivityTest{
 
@@ -44,7 +43,7 @@ class DetailActivityTest{
         onView(withId(R.id.tabs)).perform(selectTabAtPosition(0))
         onView(withId(R.id.tab_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.rvMovie)).check(matches(isDisplayed()))
-        onView(withId(R.id.rvMovie)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, ViewActions.click()))
+        onView(withId(R.id.rvMovie)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
         onView(withId(R.id.detail_title)).check(matches(isDisplayed()))
         onView(withId(R.id.detail_overview)).check(matches(isDisplayed()))
         onView(withId(R.id.detail_rating)).check(matches(isDisplayed()))
@@ -58,7 +57,7 @@ class DetailActivityTest{
         onView(withId(R.id.tabs)).perform(selectTabAtPosition(1))
         onView(withId(R.id.tab_tvShow)).check(matches(isDisplayed()))
         onView(withId(R.id.rvTvShow)).check(matches(isDisplayed()))
-        onView(withId(R.id.rvTvShow)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, ViewActions.click()))
+        onView(withId(R.id.rvTvShow)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
         onView(withId(R.id.detail_title)).check(matches(isDisplayed()))
         onView(withId(R.id.detail_overview)).check(matches(isDisplayed()))
         onView(withId(R.id.detail_rating)).check(matches(isDisplayed()))
@@ -67,7 +66,24 @@ class DetailActivityTest{
         onView(withId(R.id.detail_backdrop)).check(matches(isDisplayed()))
         pressBack()
     }
-
+    @Test
+    fun updateFavoriteMovie(){
+        onView(withId(R.id.rvMovie)).check(matches(isDisplayed()))
+        onView(withId(R.id.rvMovie)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click()))
+        onView(withId(R.id.detail_btnFavorite)).check(matches(isDisplayed()))
+        onView(withId(R.id.detail_btnFavorite)).perform(click())
+        pressBack()
+    }
+    @Test
+    fun updateFavoriteTvShow(){
+        onView(withId(R.id.tabs)).perform(selectTabAtPosition(1))
+        onView(withId(R.id.tab_tvShow)).check(matches(isDisplayed()))
+        onView(withId(R.id.rvTvShow)).check(matches(isDisplayed()))
+        onView(withId(R.id.rvTvShow)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click()))
+        onView(withId(R.id.detail_btnFavorite)).check(matches(isDisplayed()))
+        onView(withId(R.id.detail_btnFavorite)).perform(click())
+        pressBack()
+    }
     private fun selectTabAtPosition(tabIndex: Int): ViewAction {
         return object : ViewAction {
             override fun getDescription() = "with tab at index $tabIndex"

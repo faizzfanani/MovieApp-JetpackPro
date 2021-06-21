@@ -1,6 +1,7 @@
 package com.faizzfanani.movieappjetpackpro.data.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.paging.PagedList
 import com.faizzfanani.movieappjetpackpro.data.Repository
 import com.faizzfanani.movieappjetpackpro.data.local.entity.MovieEntity
 import com.faizzfanani.movieappjetpackpro.data.local.entity.TvShowEntity
@@ -41,12 +42,13 @@ class RepositoryImplTest{
         repository = FakeRepository(localDataSource, remoteDataSource, appExecutor)
     }
 
+    //List
     @Test
-    fun `get list movie normal`(){
+    fun `get list movie`(){
         //given
         localDataSource.addMovies(fakeMovieList)
         //when
-        var result : Resource<List<MovieEntity>>? = null
+        var result : Resource<PagedList<MovieEntity>>? = null
         repository.getMovieList().observeForever {
             result = it
         }
@@ -55,25 +57,11 @@ class RepositoryImplTest{
         assertEquals(fakeMovieList, result?.data)
     }
     @Test
-    fun `get list movie empty`(){
-        //given
-        remoteDataSource.movieList = emptyList()
-        //when
-        var result : Resource<List<MovieEntity>>? = null
-        repository.getMovieList().observeForever {
-            it.message?.let { errorMessage ->
-                result = Resource.Error(errorMessage, fakeMovieList) }
-        }
-        //then
-        assertEquals(Resource.Error("Data empty", fakeMovieList).message, result?.message)
-        assertEquals(Resource.Error("Data empty", fakeMovieList).data, result?.data)
-    }
-    @Test
-    fun `get list tvShow normal`(){
+    fun `get list tvShow`(){
         //given
         localDataSource.addTvShows(fakeTvShowList)
         //when
-        var result : Resource<List<TvShowEntity>>? = null
+        var result : Resource<PagedList<TvShowEntity>>? = null
         repository.getTvShowList().observeForever {
             result = it
         }
@@ -81,22 +69,38 @@ class RepositoryImplTest{
         assertNotNull(result?.data)
         assertEquals(fakeTvShowList, result?.data)
     }
+
+    //Favorite
     @Test
-    fun `get list tvShow empty`(){
+    fun `get list movie favorite`(){
         //given
-        remoteDataSource.tvShowList = emptyList()
+        localDataSource.addMovies(fakeMovieList)
         //when
-        var result : Resource<List<TvShowEntity>>? = null
-        repository.getTvShowList().observeForever {
-            it.message?.let { errorMessage ->
-                result = Resource.Error(errorMessage, fakeTvShowList) }
+        var result : PagedList<MovieEntity>? = null
+        repository.getMovieFavorite().observeForever {
+            result = it
         }
         //then
-        assertEquals(Resource.Error("Data empty", fakeTvShowList).message, result?.message)
-        assertEquals(Resource.Error("Data empty", fakeTvShowList).data, result?.data)
+        assertNotNull(result)
+        assertEquals(fakeMovieList, result)
     }
     @Test
-    fun `get detail movie normal`(){
+    fun `get list tvShow favorite`(){
+        //given
+        localDataSource.addTvShows(fakeTvShowList)
+        //when
+        var result : PagedList<TvShowEntity>? = null
+        repository.getTvShowFavorite().observeForever {
+            result = it
+        }
+        //then
+        assertNotNull(result)
+        assertEquals(fakeTvShowList, result)
+    }
+
+    //Detail
+    @Test
+    fun `get detail movie`(){
         //given
         localDataSource.addMovie(fakeMovieDetail)
         //when
@@ -109,7 +113,7 @@ class RepositoryImplTest{
         assertEquals(fakeMovieDetail, result?.data)
     }
     @Test
-    fun `get detail tvShow normal`(){
+    fun `get detail tvShow`(){
         //given
         localDataSource.addTvShow(fakeTvShowDetail)
         //when

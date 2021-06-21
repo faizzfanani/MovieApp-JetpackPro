@@ -26,10 +26,6 @@ open class AppExecutor @VisibleForTesting constructor(
         return diskIO
     }
 
-    fun networkIO(): Executor {
-        return networkIO
-    }
-
     fun mainThread(): Executor {
         return mainThread
     }

@@ -1,5 +1,7 @@
 package com.faizzfanani.movieappjetpackpro.data
 
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -11,13 +13,16 @@ import com.faizzfanani.movieappjetpackpro.data.remote.response.ApiResponse
 import com.faizzfanani.movieappjetpackpro.data.remote.response.MovieResponse
 import com.faizzfanani.movieappjetpackpro.data.remote.response.TvShowResponse
 import com.faizzfanani.movieappjetpackpro.utils.AppExecutor
+import com.faizzfanani.movieappjetpackpro.utils.EspressoIdlingResource
 import com.faizzfanani.movieappjetpackpro.vo.Resource
 
 class RepositoryImpl(
         private val appExecutor: AppExecutor,
         private val remoteDataSource: RemoteDataSource,
         private val localDataSource: LocalDataSource) : Repository {
+    private val handler = Handler(Looper.getMainLooper())
     companion object {
+        private const val SERVICE_LATENCY_IN_MILLIS: Long = 2000
         private var INSTANCE: RepositoryImpl? = null
         fun getInstance(appExecutor: AppExecutor, remoteDataSource: RemoteDataSource, localDataSource: LocalDataSource): Repository {
             if (INSTANCE == null) {
@@ -89,7 +94,13 @@ class RepositoryImpl(
     }
 
     override fun updateMovieFavorite(id: Int, isFavorite: Boolean) {
-        localDataSource.updateMovieFavorite(id, isFavorite)
+        EspressoIdlingResource.increment()
+        handler.postDelayed({
+            appExecutor.diskIO().execute {
+                localDataSource.updateMovieFavorite(id, isFavorite)
+                EspressoIdlingResource.decrement()
+            }
+        }, SERVICE_LATENCY_IN_MILLIS)
     }
 
     //Tv Show
@@ -156,6 +167,12 @@ class RepositoryImpl(
     }
 
     override fun updateTvShowFavorite(id: Int, isFavorite: Boolean) {
-        localDataSource.updateTvShowFavorite(id, isFavorite)
+        EspressoIdlingResource.increment()
+        handler.postDelayed({
+            appExecutor.diskIO().execute {
+                localDataSource.updateTvShowFavorite(id, isFavorite)
+                EspressoIdlingResource.decrement()
+            }
+        }, SERVICE_LATENCY_IN_MILLIS)
     }
 }

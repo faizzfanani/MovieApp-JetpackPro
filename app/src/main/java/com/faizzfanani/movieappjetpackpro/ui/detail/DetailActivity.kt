@@ -14,13 +14,15 @@ import com.faizzfanani.movieappjetpackpro.data.local.entity.TvShowEntity
 import com.faizzfanani.movieappjetpackpro.databinding.ActivityDetailBinding
 import com.faizzfanani.movieappjetpackpro.ui.viewmodel.ViewModelFactory
 import com.faizzfanani.movieappjetpackpro.utils.Constant
+import com.faizzfanani.movieappjetpackpro.utils.Constant.Companion.id
+import com.faizzfanani.movieappjetpackpro.utils.Constant.Companion.tagMovie
+import com.faizzfanani.movieappjetpackpro.utils.Constant.Companion.tagTvShow
+import com.faizzfanani.movieappjetpackpro.utils.Constant.Companion.type
 import com.faizzfanani.movieappjetpackpro.vo.Resource
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var viewModel : DetailViewModel
     private lateinit var binding: ActivityDetailBinding
-    private val tagMovie = "movie"
-    private val tagTvShow = "tvShow"
     private var isFavorite = false
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +32,8 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.navy)))
         viewModel = ViewModelProvider(this, ViewModelFactory.getInstance(application))[DetailViewModel::class.java]
-        val id = intent.getIntExtra("id", 0)
-        val type = intent.getStringExtra("type")
+        val id = intent.getIntExtra(id, 0)
+        val type = intent.getStringExtra(type)
         if (type != null) {
             loadData(id, type)
         }

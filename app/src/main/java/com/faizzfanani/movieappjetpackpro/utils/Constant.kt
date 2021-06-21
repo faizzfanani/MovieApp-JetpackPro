@@ -8,5 +8,10 @@ class Constant {
         const val API_KEY = "api_key"
         const val LANGUAGE = "language"
         const val PAGE = "page"
+        const val id = "id"
+        const val type = "type"
+        const val tagMovie = "movie"
+        const val tagTvShow = "tvShow"
+        const val titleFavorite = "Favorites"
     }
 }

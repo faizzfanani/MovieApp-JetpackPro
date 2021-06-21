@@ -11,6 +11,9 @@ import com.faizzfanani.movieappjetpackpro.data.local.entity.MovieEntity
 import com.faizzfanani.movieappjetpackpro.databinding.ItemMovieBinding
 import com.faizzfanani.movieappjetpackpro.ui.detail.DetailActivity
 import com.faizzfanani.movieappjetpackpro.utils.Constant
+import com.faizzfanani.movieappjetpackpro.utils.Constant.Companion.id
+import com.faizzfanani.movieappjetpackpro.utils.Constant.Companion.tagMovie
+import com.faizzfanani.movieappjetpackpro.utils.Constant.Companion.type
 
 class MovieAdapter : PagedListAdapter<MovieEntity, MovieAdapter.Holder>(DIFF_CALLBACK){
     private val list = arrayListOf<MovieEntity>()
@@ -46,8 +49,8 @@ class MovieAdapter : PagedListAdapter<MovieEntity, MovieAdapter.Holder>(DIFF_CAL
         //item click listener
         holder.binding.root.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailActivity::class.java)
-            intent.putExtra("id", list[position].id)
-            intent.putExtra("type", "movie")
+            intent.putExtra(id, list[position].id)
+            intent.putExtra(type, tagMovie)
             holder.itemView.context.startActivity(intent)
         }
     }

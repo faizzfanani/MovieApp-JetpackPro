@@ -2,9 +2,11 @@ package com.faizzfanani.movieappjetpackpro.data.source.local
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.paging.DataSource
 import com.faizzfanani.movieappjetpackpro.data.local.LocalDataSource
 import com.faizzfanani.movieappjetpackpro.data.local.entity.MovieEntity
 import com.faizzfanani.movieappjetpackpro.data.local.entity.TvShowEntity
+import com.faizzfanani.movieappjetpackpro.utils.PagedListUtil.createMockDataSourceFactory
 
 class FakeLocalDataSource(
         private var movieList: MutableList<MovieEntity> = mutableListOf(),
@@ -19,15 +21,12 @@ class FakeLocalDataSource(
         this.movieList = movies.toMutableList()
     }
 
-    override fun getMovieList(): LiveData<List<MovieEntity>> {
-        return liveData {
-            if (movieList.isNotEmpty()){
-                emit(movieList)
-            }
-            else if (movieList.isNullOrEmpty()){
-                emit(emptyList())
-            }
-        }
+    override fun getMovieList(): DataSource.Factory<Int, MovieEntity> {
+        return createMockDataSourceFactory(movieList)
+    }
+
+    override fun getMovieFavorite(): DataSource.Factory<Int, MovieEntity> {
+        return createMockDataSourceFactory(movieList)
     }
 
     override fun getMovieDetails(id: Int): LiveData<MovieEntity> {
@@ -41,6 +40,12 @@ class FakeLocalDataSource(
         }
     }
 
+    override fun updateMovieFavorite(id: Int, isFavorite: Boolean) {
+        if(movieEntity?.id  == id){
+            movieEntity?.isFavorite = isFavorite
+        }
+    }
+
     override fun addTvShow(tvShowEntity: TvShowEntity) {
         this.tvShowEntity = tvShowEntity
     }
@@ -49,14 +54,12 @@ class FakeLocalDataSource(
         this.tvShowList = tvShows.toMutableList()
     }
 
-    override fun getTvShowList(): LiveData<List<TvShowEntity>> {
-        return liveData {
-            if (tvShowList.isNotEmpty()){
-                emit(tvShowList)
-            }else if (tvShowList.isNullOrEmpty()){
-                emit(emptyList())
-            }
-        }
+    override fun getTvShowList(): DataSource.Factory<Int, TvShowEntity> {
+        return createMockDataSourceFactory(tvShowList)
+    }
+
+    override fun getTvShowFavorite(): DataSource.Factory<Int, TvShowEntity> {
+        return createMockDataSourceFactory(tvShowList)
     }
 
     override fun getTvShowDetails(id: Int): LiveData<TvShowEntity> {
@@ -67,6 +70,12 @@ class FakeLocalDataSource(
                     tvShowEntity?.let { emit(it) }
                 }else{ tvShowEntity?.let { emit(it) }}
             }else{ tvShowEntity?.let { emit(it) }}
+        }
+    }
+
+    override fun updateTvShowFavorite(id: Int, isFavorite: Boolean) {
+        if (tvShowEntity?.id == id){
+            tvShowEntity?.isFavorite = isFavorite
         }
     }
 

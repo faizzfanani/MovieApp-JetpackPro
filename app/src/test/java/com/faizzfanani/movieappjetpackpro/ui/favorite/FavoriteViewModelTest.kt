@@ -1,27 +1,28 @@
-package com.faizzfanani.movieappjetpackpro.ui.detail
+package com.faizzfanani.movieappjetpackpro.ui.favorite
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.paging.PagedList
 import com.faizzfanani.movieappjetpackpro.data.local.entity.MovieEntity
 import com.faizzfanani.movieappjetpackpro.data.local.entity.TvShowEntity
 import com.faizzfanani.movieappjetpackpro.data.repository.FakeRepository
 import com.faizzfanani.movieappjetpackpro.data.source.local.FakeLocalDataSource
 import com.faizzfanani.movieappjetpackpro.data.source.remote.FakeRemoteDataSource
+import com.faizzfanani.movieappjetpackpro.ui.favorite.list.FavoriteViewModel
 import com.faizzfanani.movieappjetpackpro.utils.AppExecutor
 import com.faizzfanani.movieappjetpackpro.utils.FakeDataDummy
-import com.faizzfanani.movieappjetpackpro.vo.Resource
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito
 
-class DetailViewModelTest{
+class FavoriteViewModelTest{
     private val appExecutor = Mockito.mock(AppExecutor::class.java)
     private lateinit var localDataSource : FakeLocalDataSource
     private lateinit var remoteDataSource: FakeRemoteDataSource
-    private lateinit var viewModel : DetailViewModel
-    private lateinit var fakeMovieDetail : MovieEntity
-    private lateinit var fakeTvShowDetail : TvShowEntity
+    private lateinit var viewModel : FavoriteViewModel
+    private lateinit var fakeMovieList : List<MovieEntity>
+    private lateinit var fakeTvShowList : List<TvShowEntity>
     private lateinit var repository : FakeRepository
 
     @get:Rule
@@ -31,38 +32,37 @@ class DetailViewModelTest{
     fun init() {
         localDataSource = FakeLocalDataSource()
         remoteDataSource = FakeRemoteDataSource()
-        fakeMovieDetail = FakeDataDummy.movieEntity
-        fakeTvShowDetail = FakeDataDummy.tvShowEntity
+        fakeMovieList = FakeDataDummy.movieList
+        fakeTvShowList = FakeDataDummy.tvShowList
         repository = FakeRepository(localDataSource, remoteDataSource, appExecutor)
-        viewModel = DetailViewModel(repository)
+        viewModel = FavoriteViewModel(repository)
     }
 
     @Test
-    fun `get detail movie`(){
+    fun `get list movie favorite`(){
         //given
-        localDataSource.addMovie(fakeMovieDetail)
+        localDataSource.addMovies(fakeMovieList)
         //when
-        var result : Resource<MovieEntity>? = null
-        viewModel.getMovieDetail(578701).observeForever {
+        var result : PagedList<MovieEntity>? = null
+        viewModel.getMovieFavorite().observeForever {
             result = it
         }
         //then
-        assertNotNull(result?.data)
-        assertEquals(fakeMovieDetail, result?.data)
+        assertNotNull(result)
+        assertEquals(fakeMovieList, result)
     }
 
     @Test
-    fun `get detail tvShow`(){
+    fun `get list tvShow favorite`(){
         //given
-        localDataSource.addTvShow(fakeTvShowDetail)
+        localDataSource.addTvShows(fakeTvShowList)
         //when
-        var result : Resource<TvShowEntity>? = null
-        viewModel.getTvShowDetail(60735).observeForever {
+        var result : PagedList<TvShowEntity>? = null
+        viewModel.getTvShowFavorite().observeForever {
             result = it
         }
         //then
-        assertNotNull(result?.data)
-        assertEquals(fakeTvShowDetail, result?.data)
+        assertNotNull(result)
+        assertEquals(fakeTvShowList, result)
     }
-
 }
